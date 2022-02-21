@@ -4,10 +4,9 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('Raza', {
-    ID: {
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       primaryKey: true
     },
     nombre: {
@@ -15,25 +14,15 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     altura: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     peso: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     anosvida: {
-      type: DataTypes.STRING,
-    }
-  });
-  sequelize.define('Temperamento', {
-    ID: {
       type: DataTypes.INTEGER,
-      unique: true,
-      primaryKey: true
-    },
-    nombre: {
-      type: DataTypes.STRING,
     }
   });
 };

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom"
 import { getRazas } from "../actions";
+import Card from "./Card";
 
 class Home extends Component {
     constructor(props) {
@@ -25,11 +27,29 @@ class Home extends Component {
     render() {
         return (
             <div>
-                {this.props.razas.map(r => {
-                    return (
-                        <h1>{r.nombre}</h1>
-                    )
-                })}
+                <div>
+                    <form>
+                        <input type="text" placeholder="raza"/>
+                        <input type="submit" />
+                    </form>
+                </div>
+                <div>
+                    {this.props.razas.map(r => {
+                        return (
+                            <Card
+                                nombre={r.nombre}
+                                temperamento={r.temperamento}
+                                peso={r.peso}
+                                imagen={r.imagen}
+                            />
+                        )
+                    })}
+                </div>
+                <div>
+                    <NavLink to='/home'>Volver a cargar razas</NavLink>
+                    <NavLink to='/razanueva'>Crear raza</NavLink>
+                    <NavLink to='/'>Volver</NavLink>
+                </div>
             </div>
         )
     }

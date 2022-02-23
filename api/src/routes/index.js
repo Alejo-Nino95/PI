@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const axios = require('axios');
-const { Raza, Temperamento } = require('../db')
+const { Raza, Temperamento } = require('../db');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -19,7 +19,13 @@ router.get('/dogs', async (req, res) => {
     const apiData = await axios.get('https://api.thedogapi.com/v1/breeds')
     const bdData = await Raza.findAll({
         attributes: ['nombre', 'peso'],
-        include: Temperamento
+        include: [{
+            model: Temperamento,
+            attributes: ['nombre'],
+            through: {
+                attributes: []
+            }
+        }]
     })
     let raza = apiData.data.map(r => {
         return {
@@ -99,7 +105,8 @@ router.get('/temperament', async (req, res) => {
 })
 
 router.post('/dog', async (req, res) => {
-    const { nombre, altura, peso, anosvida } = req.body;
+    const { nombre, altura, peso, anosvida, temperamentos } = req.body;
+    let temp = [];
     await Raza.create({
         id: idRaza,
         nombre,
@@ -107,8 +114,18 @@ router.post('/dog', async (req, res) => {
         peso,
         anosvida
     })
+    const razaNueva = await Raza.findOne({
+        where: { nombre: nombre }
+    })
+    for (let i = 0; i < temperamentos.length; i++) {
+        temp.push(await Temperamento.findOne({
+            where: { nombre: temperamentos[i] },
+            attributes: ['id']
+        }))
+    }
+    razaNueva.setTemperamentos(temp)
     idRaza++;
-    res.json('Registro exitoso')
+    res.send('Registro exitoso')
 })
 
 module.exports = router;

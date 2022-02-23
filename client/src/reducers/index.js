@@ -1,5 +1,6 @@
 const initialState = {
-    razas: []
+    razas: [],
+    temperamentos: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -7,6 +8,12 @@ function rootReducer(state = initialState, action) {
         return {
             ...state,
             razas: state.razas.concat(action.payload)
+        }
+    }
+    if (action.type === "GET_TEMP") {
+        return {
+            ...state,
+            temperamentos: state.temperamentos.concat(action.payload)
         }
     }
     return state;

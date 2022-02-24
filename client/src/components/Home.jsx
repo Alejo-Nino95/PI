@@ -9,7 +9,11 @@ class Home extends Component {
         super(props);
         this.state = {
             raza: "",
-            pages: []
+            dato: "todos",
+            temp: "todos",
+            orden: "alfasc",
+            paginas: 0,
+            result: []
         }
     }
 
@@ -17,29 +21,54 @@ class Home extends Component {
         this.props.getRazas();
         this.props.getTemperamentos();
         this.setState({
-            pages: Math.trunc(this.props.razas.length/8+1)
+            result: this.props.razas,
         })
     }
 
-    handleChange(event) {
+    async handleChange(event) {
+        if (this.state.dato === 'api' && this.state.temp === 'todos') {
+            await this.setState({
+                result: this.props.result.filter(r => r.id === 1)
+            })
+        }
+        if (this.state.dato === 'bd' && this.state.temp === 'todos') {
+            await this.setState({
+                result: this.props.result.filter(r => r.id > 10)
+            })
+        }
+        if (this.state.dato === 'todos' && this.state.temp === 'todos') {
+            await this.setState({
+                result: this.props.razas
+            })
+        }
+        if (this.state.dato === 'api') {
+            await this.setState({
+                result: this.props.razas.filter(r => r.id === 1 && r.temperamento.includes(this.state.temp))
+            })
+        }
+        if (this.state.dato === 'bd') {
+            await this.setState({
+                result: this.state.result.filter(r => r.id > 10 && r.temperamento.includes(this.state.temp))
+            })
+        }
+        // if (this.state.dato === 'todos') {
+        //     await this.setState({
+        //         result: this.props.result.filter(r => r.temperamento.includes(this.state.temp))
+        //     })
+        // }
         this.setState({
-            raza: event.target.value
+            [event.target.name]: event.target.value,
+        })
+        this.setState({
+            paginas: Math.trunc(this.state.result.length / 8 + 1)
         })
     }
 
     handleSubmit(event) {
         event.preventDefault();
         this.props.getRazas(this.state.raza);
-        this.paginacion()
-    }
-
-    paginacion(){
-        let pages = [];
-        for (let i = 0; i < Math.trunc(this.props.razas.length/8+1); i++) {
-            pages.push(i+1)
-        }
         this.setState({
-            pages: pages
+            result: this.props.razas
         })
     }
 
@@ -48,22 +77,22 @@ class Home extends Component {
             <div>
                 <div>
                     <form onSubmit={e => this.handleSubmit(e)}>
-                        <input type="text" placeholder="raza" onChange={e => this.handleChange(e)}/>
-                        <input type="submit" value='Buscar'/>
+                        <input type="text" name="raza" placeholder="raza" onChange={e => this.handleChange(e)} />
+                        <input type="submit" value='Buscar' />
                     </form>
                 </div>
                 <div>
                     <label>Filtrar por: Tipo de dato </label>
-                    <select name="" id="">
+                    <select name="dato" onChange={e => this.handleChange(e)}>
                         <option value="todos">Todos</option>
                         <option value="api">Datos API</option>
                         <option value="bd">Datos BD</option>
                     </select>
                     <label> Temperamento </label>
-                    <select name="" id="">
+                    <select name="temp" onChange={e => this.handleChange(e)}>
                         <option value="todos">Todos</option>
                         {this.props.temperamentos.map(t => {
-                            return(
+                            return (
                                 <option value={t.nombre}>{t.nombre}</option>
                             )
                         })}
@@ -71,7 +100,7 @@ class Home extends Component {
                 </div>
                 <div>
                     <label>Ordenar por: </label>
-                    <select name="" id="">
+                    <select name="orden" onChange={e => this.handleChange(e)}>
                         <option value="alfasc">Orden alfabético asc.</option>
                         <option value="alfdes">Orden alfabético des.</option>
                         <option value="pesasc">Peso ascendente</option>
@@ -79,7 +108,7 @@ class Home extends Component {
                     </select>
                 </div>
                 <div>
-                    {this.props.razas.map(r => {
+                    {this.state.result.map(r => {
                         return (
                             <Card
                                 nombre={r.nombre}

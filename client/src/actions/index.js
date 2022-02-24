@@ -3,9 +3,9 @@ import axios from 'axios'
 export function getRazas(raza) {
     return async function (dispatch) {
         let razas;
-        if(raza) {razas = await axios.get(`http://localhost:3001/dogs?name=${raza}`)}
-        else {razas = await axios.get('http://localhost:3001/dogs')}
-        dispatch({ type: "GET_RAZAS", payload: razas.data });
+        if (raza) { razas = await axios.get(`http://localhost:3001/dogs?name=${raza}`) }
+        else { razas = await axios.get('http://localhost:3001/dogs') }
+        dispatch({ type: "GET_RAZAS", payload: razas.data })
     };
 };
 

@@ -8,7 +8,7 @@ function rootReducer(state = initialState, action) {
     if (action.type === "GET_RAZAS") {
         return {
             ...state,
-            razas: action.payload
+            razas: action.payload,
         }
     }
     if (action.type === "GET_TEMP") {

@@ -41,7 +41,7 @@ router.get('/dogs', async (req, res) => {
     if (name) {
         raza = raza.filter(r => r.nombre.toLowerCase().includes(name.toLowerCase()))
         if (raza.length) return res.status(200).json(raza)
-        else return res.status(404).send('No existe una raza con ese nombre')
+        else return res.status(404).json('No existe una raza con ese nombre')
     }
 
     res.json(raza);

@@ -6,7 +6,7 @@ export default function Landing_Page() {
         <div>
             <h1>Henry Dogs</h1>
             <h1>Hola</h1>
-            <NavLink to='/home'>Iniciar</NavLink>
+            <NavLink to='/home/1'>Iniciar</NavLink>
         </div>
     )
 }

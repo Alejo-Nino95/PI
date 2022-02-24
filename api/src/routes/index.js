@@ -18,7 +18,7 @@ router.get('/dogs', async (req, res) => {
 
     const apiData = await axios.get('https://api.thedogapi.com/v1/breeds')
     const bdData = await Raza.findAll({
-        attributes: ['nombre', 'peso'],
+        attributes: ['id', 'nombre', 'peso', 'imagen'],
         include: [{
             model: Temperamento,
             attributes: ['nombre'],
@@ -29,6 +29,7 @@ router.get('/dogs', async (req, res) => {
     })
     let raza = apiData.data.map(r => {
         return {
+            id: r.id,
             imagen: r.image.url,
             nombre: r.name,
             temperamento: r.temperament,
@@ -39,7 +40,7 @@ router.get('/dogs', async (req, res) => {
 
     if (name) {
         raza = raza.filter(r => r.nombre.toLowerCase().includes(name.toLowerCase()))
-        if (raza.length) return res.json(raza)
+        if (raza.length) return res.status(200).json(raza)
         else return res.status(404).send('No existe una raza con ese nombre')
     }
 
@@ -105,10 +106,11 @@ router.get('/temperament', async (req, res) => {
 })
 
 router.post('/dog', async (req, res) => {
-    const { nombre, altura, peso, anosvida, temperamentos } = req.body;
+    const { imagen, nombre, altura, peso, anosvida, temperamentos } = req.body;
     let temp = [];
     await Raza.create({
         id: idRaza,
+        imagen,
         nombre,
         altura,
         peso,
@@ -125,7 +127,7 @@ router.post('/dog', async (req, res) => {
     }
     razaNueva.setTemperamentos(temp)
     idRaza++;
-    res.send('Registro exitoso')
+    res.json('Registro exitoso')
 })
 
 module.exports = router;

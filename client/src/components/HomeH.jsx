@@ -1,53 +1,90 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { getRazas, getTemperamentos } from "../actions";
+import { NavLink, useLocation } from "react-router-dom";
+import { filterTemp, getRazas, getTemperamentos } from "../actions";
 import Card from "./Card";
+import { ReactDOM } from "react";
 
 export default function HomeH() {
-    var razas = useSelector(state => state.razas)
-    const temperamentos = useSelector(state => state.temperamentos)
+    var razas = useSelector(state => state.razas);
+    const temperamentos = useSelector(state => state.temperamentos);
     const [raza, setRaza] = useState("");
     const [dato, setDato] = useState("todos");
     const [temp, setTemp] = useState("todos");
     const [orden, setOrden] = useState("alfasc");
+    const [page, setPage] = useState(0);
+    var [result, setResult] = useState([]);
+    const [resPag, setRePag] = useState([]);
 
     const dispatch = useDispatch();
+    const location = useLocation();
+
+    var indexini = location.pathname.indexOf('e') + 2;
+    var indexfini = location.pathname.length - 1;
+    var index;
+    if (indexini === indexfini) index = parseInt(location.pathname[indexini]);
+    else index = parseInt(location.pathname[indexini].concat(location.pathname[indexfini]))
 
     useEffect(() => {
-        dispatch(getRazas());
-        dispatch(getTemperamentos())
-    }, [dispatch])
+    dispatch(getRazas(raza));
+    dispatch(getTemperamentos());
+    }, [dispatch, raza])
 
-    const handleChange = async function (event) {
-        if (event.target.name === "raza") {
-            setRaza(event.target.value)
-            dispatch(getRazas(raza))
-        }
-        else if (event.target.name === "dato") setDato(event.target.value)
+    const handleChange = function (event) {
+        if (event.target.name === "raza") setRaza(event.target.value)
+        else if (event.target.name === "dato") setTemp(event.target.value)
         else if (event.target.name === "temp") setTemp(event.target.value)
         else if (event.target.name === "orden") setOrden(event.target.value)
+        dispatch(getRazas(raza))
+        // if (temp !== "todos") {
+        //     var r = result.filter(r => r.temperamento)
+        //     setResult(r.filter(r => r.temperamento.includes(temp)))
+        // }
     }
 
-    if (temp !== "todos") {
-        razas = razas.filter(r => r.temperamento)
-        razas = razas.filter(r => r.temperamento.includes(temp))
-        console.log(razas)
+
+
+    const filter = function (event) {
+        // if (event.target.value !== "todos") {
+        //     setResult(result.filter(r => r.temperamento))
+        // }
     }
 
-    if (orden === 'alfasc') {
-        razas.sort()
+
+    // if (temp !== "todos") {
+    //     var r = result.filter(r => r.temperamento)
+    //     setResult(r.filter(r => r.temperamento.includes(temp)))
+    // }
+
+    // if (orden === 'alfasc') {
+    //     razas.sort()
+    // }
+
+    // if (orden === 'alfdes') {
+    //     razas.sort(function (a, b) {
+    //         if (a.nombre < b.nombre) return 1;
+    //         if (a.nombre === b.nombre) return 0;
+    //         return -1
+    //     })
+    // }
+
+    var paginas = []
+    for (let i = 1; i < Math.trunc(result.length / 8 + 2); i++) {
+        paginas.push(i)
     }
 
-    if (orden === 'alfdes') {
-        razas.sort(function (a, b) {
-            if (a.nombre < b.nombre) return 1;
-            if (a.nombre === b.nombre) return 0;
-            return -1
-        })
-    }
+    // while(temp !== 'todos') {
+    //     result = result.filter(r => r.temperamento)
+    //     result = result.filter(r => r.temperamento.includes(temp))
+    // }
 
+    // var resPag = []
+    // for (let i = (page*8)-8; i < page*8; i++) {
+    //     resPag[i] = result[i]
+    // }
+
+    // setRePag(resPag);
 
     // if (orden === 'pesasc') {
     //     razas = razas.filter(r => r.peso === 'NaN')
@@ -91,7 +128,7 @@ export default function HomeH() {
                 </select>
             </div>
             <div>
-                {razas.map(r => {
+                {(typeof(razas)==='string')?(<p>No existe raza con nombre {raza}</p>):(razas.map(r => {
                     return (
                         <Card
                             nombre={r.nombre}
@@ -100,7 +137,15 @@ export default function HomeH() {
                             imagen={r.imagen}
                         />
                     )
-                })}
+                }))}
+            </div>
+            <div>
+                {paginas.map(p => {
+                    return (
+                        <NavLink to={`/home/${p}`}>{p}</NavLink>
+                    )
+                }
+                )}
             </div>
             <div>
                 <button>Volver a cargar razas</button>

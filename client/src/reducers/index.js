@@ -23,6 +23,13 @@ function rootReducer(state = initialState, action) {
             alert: action.payload
         }
     }
+    if (action.type === "FILTER_TEMP") {
+        const filter = state.razas.filter(r => r.id>20)
+        return {
+            ...state,
+            razas: filter
+        }
+    }
     return state;
 }
 

@@ -36,12 +36,26 @@ export function postNuevaRaza(raza) {
 };
 
 export function filterTemp(temp) {
+    return function (dispatch) {
+        dispatch({ type: "FILTER_TEMP", payload: temp })
+    };
+};
+
+export function filterDato(dato) {
+    return function (dispatch) {
+        dispatch({ type: "FILTER_DATO", payload: dato })
+    };
+};
+
+export function orderAlf(alf) {
+    return function (dispatch) {
+        dispatch({ type: "ORDER_ALF", payload: alf })
+    };
+};
+
+export function buscarRaza(raza) {
     return async function (dispatch) {
-        let razas;
-        razas = await axios.get('http://localhost:3001/dogs')
-        razas = razas.data.filter(r => r.temperamento === true)
-        razas = razas.filter(r => r.temperamento.includes(temp))
-        console.log(temp)
-        dispatch({ type: "FILTER_TEMP", payload: razas })
+        const result = await axios.get(`http://localhost:3001/dogs/${raza}`)
+        dispatch({ type: "GET_RESRAZ", payload: result.data });
     };
 };

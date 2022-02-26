@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-import { filterTemp, getRazas, getTemperamentos } from "../actions";
+import { filterDato, filterTemp, getRazas, getTemperamentos, orderAlf } from "../actions";
 import Card from "./Card";
 import { ReactDOM } from "react";
 
@@ -10,12 +10,6 @@ export default function HomeH() {
     var razas = useSelector(state => state.razas);
     const temperamentos = useSelector(state => state.temperamentos);
     const [raza, setRaza] = useState("");
-    const [dato, setDato] = useState("todos");
-    const [temp, setTemp] = useState("todos");
-    const [orden, setOrden] = useState("alfasc");
-    const [page, setPage] = useState(0);
-    var [result, setResult] = useState([]);
-    const [resPag, setRePag] = useState([]);
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -27,16 +21,23 @@ export default function HomeH() {
     else index = parseInt(location.pathname[indexini].concat(location.pathname[indexfini]))
 
     useEffect(() => {
-    dispatch(getRazas(raza));
-    dispatch(getTemperamentos());
+        dispatch(getRazas(raza));
+        dispatch(getTemperamentos());
     }, [dispatch, raza])
 
     const handleChange = function (event) {
         if (event.target.name === "raza") setRaza(event.target.value)
-        else if (event.target.name === "dato") setTemp(event.target.value)
-        else if (event.target.name === "temp") setTemp(event.target.value)
-        else if (event.target.name === "orden") setOrden(event.target.value)
-        dispatch(getRazas(raza))
+        else if (event.target.name === "dato") {
+            if (event.target.value === 'todos') dispatch(getRazas(raza))
+            else dispatch(filterDato(event.target.value))
+        }
+        else if (event.target.name === "temp") {
+            if (event.target.value === 'todos') dispatch(getRazas(raza))
+            else dispatch(filterTemp(event.target.value))
+        }
+        else if (event.target.name === "ordenalf") {dispatch(orderAlf(event.target.value))}
+        // dispatch(filterTemp(event.target.value))
+        // console.log(temp)
         // if (temp !== "todos") {
         //     var r = result.filter(r => r.temperamento)
         //     setResult(r.filter(r => r.temperamento.includes(temp)))
@@ -70,7 +71,7 @@ export default function HomeH() {
     // }
 
     var paginas = []
-    for (let i = 1; i < Math.trunc(result.length / 8 + 2); i++) {
+    for (let i = 1; i < Math.trunc(razas.length / 8 + 2); i++) {
         paginas.push(i)
     }
 
@@ -95,7 +96,6 @@ export default function HomeH() {
     //     // })
     // }
 
-
     return (
         <div>
             <div>
@@ -119,16 +119,19 @@ export default function HomeH() {
                 </select>
             </div>
             <div>
-                <label>Ordenar por: </label>
-                <select name="orden" onChange={e => handleChange(e)}>
-                    <option value="alfasc">Orden alfabético asc.</option>
-                    <option value="alfdes">Orden alfabético des.</option>
-                    <option value="pesasc">Peso ascendente</option>
-                    <option value="pesdes">Peso descendente</option>
+                <label>Ordenar por: Orden alfabético </label>
+                <select name="ordenalf" onChange={e => handleChange(e)}>
+                    <option value="asc">Ascendente</option>
+                    <option value="des">Descendente</option>
+                </select>
+                <label> Peso </label>
+                <select name="ordenpes" onChange={e => handleChange(e)}>
+                    <option value="asc">Ascendente</option>
+                    <option value="des">Descendente</option>
                 </select>
             </div>
             <div>
-                {(typeof(razas)==='string')?(<p>No existe raza con nombre {raza}</p>):(razas.map(r => {
+                {(typeof (razas) === 'string') ? (<p>No existe raza con nombre {raza}</p>) : (razas.slice((index * 8) - 8, index * 8).map(r => {
                     return (
                         <Card
                             nombre={r.nombre}

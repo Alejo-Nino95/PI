@@ -7,7 +7,7 @@ export default function Card(props) {
     <div>
       <img src={props.imagen} />
       <div>
-        <NavLink to={`/home/${props.nombre}`}>{props.nombre}</NavLink>
+        <NavLink to={`/detail/${props.nombre}`}>{props.nombre}</NavLink>
       </div>
       <div>
         <h6>Temperamento</h6>

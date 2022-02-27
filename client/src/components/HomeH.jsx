@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import { filterDato, filterTemp, getRazas, getTemperamentos, orderAlf } from "../actions";
 import Card from "./Card";
-import { ReactDOM } from "react";
 
 export default function HomeH() {
     var razas = useSelector(state => state.razas);
     const temperamentos = useSelector(state => state.temperamentos);
     const [raza, setRaza] = useState("");
+    const [orden, setOrden] = useState("");
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -25,6 +25,9 @@ export default function HomeH() {
         dispatch(getTemperamentos());
     }, [dispatch, raza])
 
+    useEffect(() => {
+    },[orden])
+
     const handleChange = function (event) {
         if (event.target.name === "raza") setRaza(event.target.value)
         else if (event.target.name === "dato") {
@@ -35,7 +38,10 @@ export default function HomeH() {
             if (event.target.value === 'todos') dispatch(getRazas(raza))
             else dispatch(filterTemp(event.target.value))
         }
-        else if (event.target.name === "ordenalf") {dispatch(orderAlf(event.target.value))}
+        else if (event.target.name === "ordenalf") {
+            dispatch(orderAlf(event.target.value));
+            setOrden(event.target.value);
+        }
         // dispatch(filterTemp(event.target.value))
         // console.log(temp)
         // if (temp !== "todos") {

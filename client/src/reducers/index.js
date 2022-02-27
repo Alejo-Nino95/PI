@@ -15,9 +15,14 @@ function rootReducer(state = initialState, action) {
         }
     }
     if (action.type === "GET_TEMP") {
+        const temp = action.payload.sort((a, b) => {
+            if (a.nombre < b.nombre) return -1
+            if (a.nombre === b.nombre) return 0
+            return 1
+        })
         return {
             ...state,
-            temperamentos: action.payload
+            temperamentos: temp
         }
     }
     if (action.type === "POST_RAZA") {

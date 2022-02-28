@@ -8,6 +8,15 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
     if (action.type === "GET_RAZAS") {
+        action.payload.forEach(e => {
+            if (e.id >= 1000) {
+                let temp = []
+                e.Temperamentos.forEach(t => {
+                    temp.push(t.nombre)
+                })
+                e.temperamento = temp.join(', ')
+            }
+        });
         return {
             ...state,
             razas: action.payload,
@@ -69,10 +78,73 @@ function rootReducer(state = initialState, action) {
             razas: orden
         }
     }
-    if (action.type === "GET_RESRAZ") {
+    if (action.type === "ORDER_PMIN") {
+        let orden;
+        state.razas.forEach(r => {
+            if (r.peso.length > 2) {
+                if (r.peso[0] === 'N') r.pesoCom = 1000
+                else if (r.peso[2] === '-') r.pesoCom = parseInt(r.peso[0])
+                else r.pesoCom = parseInt(r.peso[0].concat(r.peso[1]))
+            } else {
+                r.pesoCom = parseInt(r.peso)
+            }
+        });
+        if (action.payload === 'asc') {
+            orden = state.razas.sort((a, b) => {
+                return a.pesoCom - b.pesoCom;
+            })
+        }
+        else {
+            orden = state.razas.sort((a, b) => {
+                return b.pesoCom - a.pesoCom;
+            })
+        }
         return {
             ...state,
-            razaBus: action.payload
+            razas: orden
+        }
+    }
+    if (action.type === "ORDER_PMAX") {
+        let orden;
+        state.razas.forEach(r => {
+            if (r.peso.length > 2) {
+                if (r.peso === 'NaN') r.pesoCom = 1000
+                else if (r.peso[r.peso.length - 3] === '-') r.pesoCom = parseInt(r.peso[r.peso.length - 1])
+                else r.pesoCom = parseInt(r.peso[r.peso.length - 2].concat(r.peso[r.peso.length - 1]))
+            } else {
+                r.pesoCom = parseInt(r.peso)
+            }
+        });
+        if (action.payload === 'asc') {
+            orden = state.razas.sort((a, b) => {
+                return a.pesoCom - b.pesoCom;
+            })
+        }
+        else {
+            orden = state.razas.sort((a, b) => {
+                return b.pesoCom - a.pesoCom;
+            })
+        }
+        return {
+            ...state,
+            razas: orden
+        }
+    }
+    if (action.type === "GET_RESRAZ") {
+        let res = [];
+        if (action.payload.id >= 1000) {
+            let temp = []
+            action.payload.Temperamentos.forEach(t => {
+                temp.push(t.nombre)
+            })
+            action.payload.temperamento = temp.join(', ')
+            res.push(action.payload)
+        } else {
+            res = action.payload
+        } 
+        return {
+            ...state,
+            razaBus: res
         }
     }
     return state;

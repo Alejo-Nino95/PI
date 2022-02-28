@@ -36,6 +36,7 @@ router.get('/dogs', async (req, res) => {
             peso: r.weight.metric
         }
     })
+
     raza = raza.concat(bdData);
 
     if (name) {
@@ -52,7 +53,14 @@ router.get('/dogs/:idRaza', async (req, res) => {
     const { idRaza } = req.params;
     if (idRaza >= 1000) {
         raza = await Raza.findOne({
-            where: { id: idRaza }
+            where: { id: idRaza },
+            include: [{
+                model: Temperamento,
+                attributes: ['nombre'],
+                through: {
+                    attributes: []
+                }
+            }]
         })
         if (raza) return res.json(raza)
     } else {

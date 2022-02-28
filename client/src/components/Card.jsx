@@ -5,7 +5,7 @@ export default function Card(props) {
 
   return (
     <div>
-      <img src={props.imagen} alt='Hola'/>
+      <img src={props.imagen} alt='Img not found'/>
       <div>
         <NavLink to={`/detail/${props.nombre}`}>{props.nombre}</NavLink>
       </div>

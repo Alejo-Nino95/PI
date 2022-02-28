@@ -53,6 +53,18 @@ export function orderAlf(alf) {
     };
 };
 
+export function orderPesomin(peso) {
+    return function (dispatch) {
+        dispatch({ type: "ORDER_PMIN", payload: peso })
+    };
+};
+
+export function orderPesomax(peso) {
+    return function (dispatch) {
+        dispatch({ type: "ORDER_PMAX", payload: peso })
+    };
+};
+
 export function buscarRaza(raza) {
     return async function (dispatch) {
         const result = await axios.get(`http://localhost:3001/dogs/${raza}`)

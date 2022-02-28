@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom"
-import { postNuevaRaza } from "../actions";
+import { getTemperamentos, postNuevaRaza } from "../actions";
 
 export default function Form_Creation () {
     const temperamentos = useSelector(state => state.temperamentos);
@@ -16,6 +16,10 @@ export default function Form_Creation () {
     const [anosvida,setAnosvida] = useState("")
     const [imagen,setImagen] = useState("")
     const [temp, setTemp] = useState([])
+
+    useEffect(() => {
+        dispatch(getTemperamentos())
+    },[dispatch])
 
     const handleChange = (event) => {
         if (event.target.type === 'checkbox') {
@@ -33,7 +37,6 @@ export default function Form_Creation () {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault()
         if(!nombre.length) alert('Debe tener nombre')
         else if (/[^A-Za-z ]/i.test(nombre)) alert('El nombre solo debe contener carácteres alfabéticos')
         else if (altmin < 1) alert('La altura mínima debe ser mayor a 0cm')
@@ -45,15 +48,20 @@ export default function Form_Creation () {
         else if (anosvida < 1 || anosvida > 13) alert('Los años de vida debe ser un valor entre 1 y 13 años')
         else if (!temp.length) alert('Debe tener temperamentos')
         else {
+            let n = nombre[0].toUpperCase();
+            for (let i = 1; i < nombre.length; i++) {
+                n += nombre[i].toLowerCase();
+            }
             let obj = {
                 imagen: imagen,
-                nombre: nombre,
+                nombre: n,
                 altura: altmin + ' - ' + altmax,
                 peso: pesomin + ' - ' + pesomax,
                 anosvida: anosvida,
                 temperamentos: temp
             }
             dispatch(postNuevaRaza(obj))
+            dispatch(getTemperamentos())
             alert('Registro existoso')
         }
     }

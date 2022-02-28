@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import { getTemperamentos, postNuevaRaza } from "../actions";
 
 export default function Form_Creation () {
     const temperamentos = useSelector(state => state.temperamentos);
 
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const [nombre,setNombre] = useState("")
     const [altmin,setAltmin] = useState("")
@@ -37,6 +38,7 @@ export default function Form_Creation () {
     }
 
     const handleSubmit = (event) => {
+        event.preventDefault();
         if(!nombre.length) alert('Debe tener nombre')
         else if (/[^A-Za-z ]/i.test(nombre)) alert('El nombre solo debe contener carácteres alfabéticos')
         else if (altmin < 1) alert('La altura mínima debe ser mayor a 0cm')
@@ -63,6 +65,7 @@ export default function Form_Creation () {
             dispatch(postNuevaRaza(obj))
             dispatch(getTemperamentos())
             alert('Registro existoso')
+            document.location.reload();
         }
     }
 

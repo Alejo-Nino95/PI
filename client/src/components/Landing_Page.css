@@ -1,0 +1,46 @@
+body{
+    background-position-y:25%;
+    background-size: 100%;
+    background-image: url('https://www.semana.com/resizer/2sar7iLFSpoiknWkhUh-sAFwKDM=/1200x675/filters:format(jpg):quality(50)//cloudfront-us-east-1.images.arcpublishing.com/semana/RE55ORS5VRHPPLSJPA5LA3PBKY.jpg');
+}
+
+.pagina{
+    font-family:Bradley Hand, cursive;
+}
+
+.pagina h1{
+    color: rgb(3, 4, 94);
+    text-align: center;
+}
+
+.pagina p{
+    color: rgb(20, 180, 216);
+    text-align: center;
+    font-weight: 800;
+}
+
+.pagina label{
+    color: rgb(3, 4, 94);
+    font-weight: 800;
+    position:absolute;
+    bottom: 7.5%;
+    left: 34%;
+}
+
+.unselected{
+    background-color: rgb(20, 180, 216);
+    border-radius: 12.5%;
+    color: rgb(3, 4, 94);
+    text-decoration:none;
+    padding: 3px;
+    position:absolute;
+    bottom: 7%;
+    left: 47%;
+    transition: transform 1s;
+}
+
+.unselected:hover{
+    background-color:rgb(3, 4, 94);
+    color: rgb(202, 240, 248);
+    transform: rotate(30deg)
+}

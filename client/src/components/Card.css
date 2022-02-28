@@ -1,0 +1,36 @@
+.card{
+    border:2px solid rgb(3, 4, 94);
+    border-radius: 10px;
+    font-family:Bradley Hand, cursive;
+    text-align: center;
+    width: 40%;
+}
+.card:hover{
+    color: rgb(20, 180, 216);
+}
+.card img{
+    height:330px;
+    width: 85%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+ .card p{
+    color: rgb(20, 180, 216);
+    font-weight: 600;
+ }
+ .card h4{
+    color: rgb(3, 4, 94);
+    font-weight: 600;
+ }
+.nombre{
+    color: rgb(3, 4, 94);
+    text-decoration:none;
+    font-size: 27.5px;
+    transition: font-size 1s;
+}
+.nombre:hover{
+    color: rgb(20, 180, 216);
+    cursor: pointer;
+    font-size: 30px;
+}

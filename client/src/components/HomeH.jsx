@@ -1,3 +1,4 @@
+import './HomeH.css'
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -93,10 +94,10 @@ export default function HomeH() {
 
     return (
         <div>
-            <div>
+            <div className='busqueda'>
                 <form onSubmit={e => handleSubmit(e)}>
-                    <input type="text" name="raza" placeholder="raza" onChange={e => handleChange(e)} value={buscar} />
-                    <input type="Submit" value='Buscar' />
+                    <input className='inpbus' type="text" name="raza" placeholder="raza" onChange={e => handleChange(e)} value={buscar} />
+                    <input className='btnbus' type="Submit" value='Buscar' />
                 </form>
             </div>
             <div>
@@ -106,7 +107,7 @@ export default function HomeH() {
                     <option value="api">Datos API</option>
                     <option value="bd">Datos BD</option>
                 </select>
-                <label> Temperamento </label>
+                <label>         Temperamento </label>
                 <select name="temp" onChange={e => handleChange(e)}>
                     <option value="todos">Todos</option>
                     {temperamentos.map(t => {
@@ -136,7 +137,7 @@ export default function HomeH() {
                     <option value="des">Descendente</option>
                 </select>
             </div>
-            <div>
+            <div className='cards'>
                 {(typeof (razas) === 'string') ? (<p>No existe raza con nombre {raza}</p>) : (razas.slice((index * 8) - 8, index * 8).map(r => {
                     return (
                         <Card
@@ -148,10 +149,10 @@ export default function HomeH() {
                     )
                 }))}
             </div>
-            <div>
+            <div className='paginado'>
                 {paginas.map(p => {
                     return (
-                        <NavLink to={`/home/${p}`}>{p}</NavLink>
+                        <NavLink to={`/home/${p}`} className='link'>{p}</NavLink>
                     )
                 }
                 )}

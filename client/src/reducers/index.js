@@ -8,15 +8,17 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
     if (action.type === "GET_RAZAS") {
-        action.payload.forEach(e => {
-            if (e.id >= 1000) {
-                let temp = []
-                e.Temperamentos.forEach(t => {
-                    temp.push(t.nombre)
-                })
-                e.temperamento = temp.join(', ')
-            }
-        });
+        if (typeof(action.payload) !== 'string') {
+            action.payload.forEach(e => {
+                if (e.id >= 1000) {
+                    let temp = []
+                    e.Temperamentos.forEach(t => {
+                        temp.push(t.nombre)
+                    })
+                    e.temperamento = temp.join(', ')
+                }
+            })
+        }
         return {
             ...state,
             razas: action.payload,
@@ -141,7 +143,7 @@ function rootReducer(state = initialState, action) {
             res.push(action.payload)
         } else {
             res = action.payload
-        } 
+        }
         return {
             ...state,
             razaBus: res

@@ -7,14 +7,14 @@ import Detail from './components/Detail';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Landing_Page} />
-        <Route path="/home" component={HomeH} />
-        <Route path="/detail" component={Detail} />
-        <Route path="/razanueva" component={Form_CreationH} />
-      </Switch>
-    </Router>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Landing_Page} />
+          <Route path="/home" component={HomeH} />
+          <Route path="/detail" component={Detail} />
+          <Route path="/razanueva" component={Form_CreationH} />
+        </Switch>
+      </Router>
   );
 }
 

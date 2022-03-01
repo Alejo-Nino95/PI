@@ -1,4 +1,5 @@
 .card{
+    background-color: rgb(202, 240, 248);
     border:2px solid rgb(3, 4, 94);
     border-radius: 10px;
     font-family:Bradley Hand, cursive;
@@ -11,13 +12,14 @@
 .card img{
     height:330px;
     width: 85%;
-    margin-top: 15px;
+    margin-top: 35px;
     margin-bottom: 10px;
     border-radius: 10px;
 }
  .card p{
     color: rgb(20, 180, 216);
     font-weight: 600;
+    padding-left: 10px;
  }
  .card h4{
     color: rgb(3, 4, 94);

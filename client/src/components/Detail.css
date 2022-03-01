@@ -1,0 +1,38 @@
+.detail{
+    border: 2.5px solid rgb(3, 4, 94);
+    border-style: dashed;
+    border-radius: 2.5%;
+    width: 90%;
+    text-align: center;
+    margin-top: 2.5%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+    font-family:Bradley Hand, cursive;
+    background-color: rgb(202, 240, 248);
+}
+
+.detail img{
+    margin-top: 2.5%;
+    border: solid rgb(3, 4, 94);
+    border-radius: 2.5%;
+    width: 90%;
+}
+
+.detail h3{
+    color: rgb(3, 4, 94);
+}
+
+.detail p{
+    color: rgb(20, 180, 216);
+    font-weight: 800;
+    transition: color 1s;
+}
+
+.detail p:hover{
+    color: rgb(3, 4, 94);
+}
+
+.btn{
+    margin-left: 5%;
+    padding-bottom: 2%;
+}

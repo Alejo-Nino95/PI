@@ -11,6 +11,8 @@
 .inpbus{
     padding: 3px;
     width: 20%;
+    border: 1px solid rgb(3, 4, 94);
+    border-radius: 5px;
 }
 
 .btnbus{
@@ -24,6 +26,17 @@
     background-color:rgb(3, 4, 94);
     color: rgb(202, 240, 248);
     cursor: pointer;
+}
+
+.filord{
+    margin: 20px 85px 20px;
+    color: rgb(3, 4, 94);
+    font-weight: 500;
+}
+
+.filord select{
+    border: 1px solid rgb(3, 4, 94);
+    border-radius: 5px;
 }
 
 .cards{
@@ -59,4 +72,38 @@
     background-color:rgb(3, 4, 94);
     color: rgb(202, 240, 248);
     padding: 10px;
+}
+
+.footer{
+    margin-bottom: 15px;
+    margin-left: 85px;
+    display: flex;
+    gap: 10px;
+}
+
+.footer button{
+    background-color: rgb(20, 180, 216);
+    border-radius: 12.5%;
+    color: rgb(3, 4, 94);
+    padding: 3px;
+}
+
+.footer button:hover{
+    background-color:rgb(3, 4, 94);
+    color: rgb(202, 240, 248);
+    cursor: pointer;
+}
+
+.linkfooter{
+    background-color: rgb(20, 180, 216);
+    border-radius: 12.5%;
+    border: 1.5px solid rgb(3, 4, 94);
+    color: rgb(3, 4, 94);
+    padding: 3px;
+    text-decoration: none;
+}
+
+.linkfooter:hover{
+    background-color:rgb(3, 4, 94);
+    color: rgb(202, 240, 248);
 }

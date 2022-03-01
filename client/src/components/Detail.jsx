@@ -1,3 +1,4 @@
+import './Detail.css';
 import React from 'react';
 import { useEffect } from "react";
 import { NavLink, useLocation } from 'react-router-dom';
@@ -33,33 +34,35 @@ export default function Detail() {
     <div>
       {(!razaBus.length) ? (<p>Cargando datos...</p>) : (razaBus.map(r => {
         return (
-          <div>
+          <div className='detail'>
             <img src={r.imagen} alt="" />
             <div>
-              <h6>Nombre</h6>
+              <h3>Nombre</h3>
               <p>{r.nombre}</p>
             </div>
             <div>
-              <h6>Temperamento</h6>
+              <h3>Temperamento</h3>
               <p>{r.temperamento}</p>
             </div>
             <div>
-              <h6>Altura</h6>
+              <h3>Altura</h3>
               <p>{r.altura}</p>
             </div>
             <div>
-              <h6>Peso</h6>
+              <h3>Peso</h3>
               <p>{r.peso}</p>
             </div>
             <div>
-              <h6>Años de vida</h6>
+              <h3>Años de vida</h3>
               <p>{r.anosvida}</p>
             </div>
           </div>
         )
 
       }))}
-      <NavLink to='/home/1'>Volver</NavLink>
+      <div className='btn'>
+        <NavLink to='/home/1' className='linkfooter'>Volver</NavLink>
+      </div>
     </div>
   )
 }

@@ -100,14 +100,14 @@ export default function HomeH() {
                     <input className='btnbus' type="Submit" value='Buscar' />
                 </form>
             </div>
-            <div>
+            <div className='filord'>
                 <label>Filtrar por: Tipo de dato </label>
                 <select name="dato" onChange={e => handleChange(e)}>
                     <option value="todos">Todos</option>
                     <option value="api">Datos API</option>
                     <option value="bd">Datos BD</option>
                 </select>
-                <label>         Temperamento </label>
+                <label> Temperamento </label>
                 <select name="temp" onChange={e => handleChange(e)}>
                     <option value="todos">Todos</option>
                     {temperamentos.map(t => {
@@ -117,7 +117,7 @@ export default function HomeH() {
                     })}
                 </select>
             </div>
-            <div>
+            <div className='filord'>
                 <label>Ordenar por: Orden alfabético </label>
                 <select name="ordenalf" onChange={e => handleChange(e)}>
                     <option value="sin">Sin orden</option>
@@ -157,13 +157,13 @@ export default function HomeH() {
                 }
                 )}
             </div>
-            <div>
+            <div className='footer'>
                 <button onClick={() => {
                     dispatch(getRazas())
                     setRaza('')
                 }}>Volver a cargar razas</button>
-                <NavLink to='/razanueva'>Crear raza</NavLink>
-                <NavLink to='/'>Volver</NavLink>
+                <NavLink to='/razanueva' className='linkfooter'>Crear raza</NavLink>
+                <NavLink to='/' className='linkfooter'>Volver</NavLink>
             </div>
         </div>
     )

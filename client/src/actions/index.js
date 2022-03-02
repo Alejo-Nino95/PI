@@ -8,7 +8,7 @@ export function getRazas(raza) {
             else { razas = await axios.get('http://localhost:3001/dogs') }
             dispatch({ type: "GET_RAZAS", payload: razas.data })
         }
-        catch (err){
+        catch {
             dispatch({ type: "GET_RAZAS", payload: 'Error' })
         }
     };

@@ -35,7 +35,7 @@ export default function Detail() {
       {(!razaBus.length) ? (<p>Cargando datos...</p>) : (razaBus.map(r => {
         return (
           <div className='detail'>
-            <img src={r.imagen} alt="" />
+            <img src={r.imagen} alt="Img not found" />
             <div>
               <h3>Nombre</h3>
               <p>{r.nombre}</p>

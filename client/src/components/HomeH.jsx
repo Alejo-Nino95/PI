@@ -55,24 +55,30 @@ export default function HomeH() {
         }
         else if (event.target.name === "ordenalf") {
             if (event.target.value !== 'sin') {
-                dispatch(orderAlf(event.target.value));
-                setOrden(event.target.value);
+                if ((orden !== "ascpmn") && (orden !== "despmn") && (orden !== "ascpmx") && (orden !== "despmx")) {
+                    dispatch(orderAlf(event.target.value));
+                    setOrden(event.target.value);
+                }
             } else {
                 setOrden(event.target.value);
             }
         }
         else if (event.target.name === "ordenpesmin") {
             if (event.target.value !== 'sin') {
-                dispatch(orderPesomin(event.target.value));
-                setOrden(event.target.value);
+                if ((orden !== "asca") && (orden !== "desa") && (orden !== "ascpmx") && (orden !== "despmx")) {
+                    dispatch(orderPesomin(event.target.value));
+                    setOrden(event.target.value);
+                }
             } else {
                 setOrden(event.target.value);
             }
         }
         else if (event.target.name === "ordenpesmax") {
             if (event.target.value !== 'sin') {
-                dispatch(orderPesomax(event.target.value));
-                setOrden(event.target.value);
+                if ((orden !== "asca") && (orden !== "desa") && (orden !== "ascpmn") && (orden !== "despmn")) {
+                    dispatch(orderPesomax(event.target.value));
+                    setOrden(event.target.value);
+                }
             } else {
                 setOrden(event.target.value);
             }
@@ -116,26 +122,28 @@ export default function HomeH() {
                         )
                     })}
                 </select>
+                <label> (Seleccione uno)</label>
             </div>
             <div className='filord'>
                 <label>Ordenar por: Orden alfabético </label>
                 <select name="ordenalf" onChange={e => handleChange(e)}>
                     <option value="sin">Sin orden</option>
-                    <option value="asc">Ascendente</option>
-                    <option value="des">Descendente</option>
+                    <option value="asca">Ascendente</option>
+                    <option value="desa">Descendente</option>
                 </select>
                 <label> Peso min </label>
                 <select name="ordenpesmin" onChange={e => handleChange(e)}>
                     <option value="sin">Sin orden</option>
-                    <option value="asc">Ascendente</option>
-                    <option value="des">Descendente</option>
+                    <option value="ascpmn">Ascendente</option>
+                    <option value="despmn">Descendente</option>
                 </select>
                 <label> Peso max </label>
                 <select name="ordenpesmax" onChange={e => handleChange(e)}>
                     <option value="sin">Sin orden</option>
-                    <option value="asc">Ascendente</option>
-                    <option value="des">Descendente</option>
+                    <option value="ascpmx">Ascendente</option>
+                    <option value="despmx">Descendente</option>
                 </select>
+                <label> (Seleccione uno, poner en "sin orden" los demás)</label>
             </div>
             <div className='cards'>
                 {(typeof (razas) === 'string') ? (<p>No existe raza con nombre {raza}</p>) : (razas.slice((index * 8) - 8, index * 8).map(r => {

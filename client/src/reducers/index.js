@@ -2,7 +2,6 @@ const initialState = {
     razas: [],
     getRazas: [],
     temperamentos: [],
-    alert: "",
     razaBus: {}
 };
 
@@ -36,12 +35,6 @@ function rootReducer(state = initialState, action) {
             temperamentos: temp
         }
     }
-    if (action.type === "POST_RAZA") {
-        return {
-            ...state,
-            alert: action.payload
-        }
-    }
     if (action.type === "FILTER_TEMP") {
         let filter = state.getRazas.filter(r => r.temperamento)
         filter = filter.filter(r => r.temperamento.includes(action.payload))
@@ -61,7 +54,7 @@ function rootReducer(state = initialState, action) {
     }
     if (action.type === "ORDER_ALF") {
         let orden;
-        if (action.payload === 'asc') {
+        if (action.payload === 'asca') {
             orden = state.razas.sort((a, b) => {
                 if (a.nombre < b.nombre) return -1;
                 if (a.nombre === b.nombre) return 0;
@@ -91,7 +84,7 @@ function rootReducer(state = initialState, action) {
                 r.pesoCom = parseInt(r.peso)
             }
         });
-        if (action.payload === 'asc') {
+        if (action.payload === 'ascpmn') {
             orden = state.razas.sort((a, b) => {
                 return a.pesoCom - b.pesoCom;
             })
@@ -117,7 +110,7 @@ function rootReducer(state = initialState, action) {
                 r.pesoCom = parseInt(r.peso)
             }
         });
-        if (action.payload === 'asc') {
+        if (action.payload === 'ascpmx') {
             orden = state.razas.sort((a, b) => {
                 return a.pesoCom - b.pesoCom;
             })

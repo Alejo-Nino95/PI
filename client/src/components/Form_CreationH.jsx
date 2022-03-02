@@ -17,22 +17,65 @@ export default function Form_Creation() {
     const [anosvida, setAnosvida] = useState("")
     const [imagen, setImagen] = useState("")
     const [temp, setTemp] = useState([])
+    const [error, setError] = useState("")
 
     useEffect(() => {
         dispatch(getTemperamentos())
-    }, [dispatch])
+    }, [dispatch, error])
 
     const handleChange = (event) => {
         if (event.target.type === 'checkbox') {
             if (event.target.checked) temp.push(event.target.value)
             else setTemp(temp.filter(t => t !== event.target.value))
         } else {
-            if (event.target.name === 'nombre') setNombre(event.target.value)
-            else if (event.target.name === 'altmin') setAltmin(event.target.value)
-            else if (event.target.name === 'altmax') setAltmax(event.target.value)
-            else if (event.target.name === 'pesomin') setPesomin(event.target.value)
-            else if (event.target.name === 'pesomax') setPesomax(event.target.value)
-            else if (event.target.name === 'anosvida') setAnosvida(event.target.value)
+            if (event.target.name === 'nombre') {
+                if (/[^A-Za-z ]/i.test(event.target.value)) {
+                    setError('El nombre solo debe contener carácteres alfabéticos')
+                } else {
+                    setError('')
+                }
+                setNombre(event.target.value)
+            }
+            else if (event.target.name === 'altmin') {
+                if (parseInt(event.target.value) < 1) {
+                    setError('La altura mínima debe ser mayor a 0cm')
+                } else {
+                    setError('')
+                }
+                setAltmin(event.target.value)
+            }
+            else if (event.target.name === 'altmax') {
+                if ((parseInt(event.target.value) > 110) || (parseInt(event.target.value) < parseInt(altmin))) {
+                    setError('La altura máxima no puede sobrepasar 110cm ó la altura máxima debe ser mayor a la altura mínima')
+                } else {
+                    setError('')
+                }
+                setAltmax(event.target.value)
+            }
+            else if (event.target.name === 'pesomin') {
+                if (parseInt(event.target.value) < 1) {
+                    setError('El peso mínimo debe ser mayor a 0kg')
+                } else {
+                    setError('')
+                }
+                setPesomin(event.target.value)
+            }
+            else if (event.target.name === 'pesomax') {
+                if ((parseInt(event.target.value) > 85) || (parseInt(event.target.value) < pesomin)) {
+                    setError('El peso máximo no puede sobrepasar 85kg ó el peso máximo debe ser mayor al peso mínimo')
+                } else {
+                    setError('')
+                }
+                setPesomax(event.target.value)
+            }
+            else if (event.target.name === 'anosvida') {
+                if ((parseInt(event.target.value) < 1) || (parseInt(event.target.value) > 13)) {
+                    setError('Los años de vida debe ser un valor entre 1 y 13 años')
+                } else {
+                    setError('')
+                }
+                setAnosvida(event.target.value)
+            }
             else if (event.target.name === 'imagen') setImagen(event.target.value)
         }
     }
@@ -40,14 +83,10 @@ export default function Form_Creation() {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!nombre.length) alert('Debe tener nombre')
-        else if (/[^A-Za-z ]/i.test(nombre)) alert('El nombre solo debe contener carácteres alfabéticos')
-        else if (altmin < 1) alert('La altura mínima debe ser mayor a 0cm')
-        else if (altmax > 110) alert('La altura máxima no puede sobrepasar 110cm')
-        else if (altmax < altmin) alert('La altura máxima debe ser mayor a la altura mínima')
-        else if (pesomin < 1) alert('El peso mínimo debe ser mayor a 0kg')
-        else if (pesomax > 85) alert('El peso máximo no puede sobrepasar 85kg')
-        else if (pesomax < pesomin) alert('El peso máximo debe ser mayor al peso mínimo')
-        else if (anosvida < 1 || anosvida > 13) alert('Los años de vida debe ser un valor entre 1 y 13 años')
+        else if (!altmin.length) alert('Debe tener altura mínima')
+        else if (!altmax.length) alert('Debe tener altura máxima')
+        else if (!pesomin.length) alert('Debe tener peso mínimo')
+        else if (!pesomax.length) alert('Debe tener peso máximo')
         else if (!temp.length) alert('Debe tener temperamentos')
         else {
             let n = nombre[0].toUpperCase();
@@ -73,6 +112,7 @@ export default function Form_Creation() {
         <div className="form">
             <h1>Nueva Raza</h1>
             <form onSubmit={e => handleSubmit(e)}>
+                <p>{(error === '') ? (null) : (error)}</p>
                 <label>Nombre </label>
                 <input className='inptext1' type="text" name="nombre" placeholder="nombre" onChange={e => handleChange(e)} />
                 <p>Altura (cm)</p>
